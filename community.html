@@ -1,73 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Green Campus - Community</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum - Green Campus Hochschule Aalen</title>
     <style>
-        /* Basic styles similar to tips.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 1rem;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
         }
-        header {
-            background-color: #2f855a;
-            padding: 1rem 2rem;
-            color: white;
-        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
             font-size: 1.5rem;
             font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-        .nav-links li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .nav-links li a[aria-current="page"] {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        h1 {
             color: #2f855a;
+            text-decoration: none;
+        }
+
+        .logo::before {
+            content: "🌱";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #2f855a;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #2f855a;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2f855a, #38a169);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #ddd;
-            margin-top: 3rem;
-            font-size: 0.9rem;
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
-        a {
+
+        /* Community Stats */
+        .stats-bar {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
             color: #2f855a;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        /* Forum Feed */
+        .forum-feed {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .feed-title {
+            font-size: 1.5rem;
+            color: #2f855a;
+        }
+
+        .new-post-btn {
+            background: #2f855a;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .new-post-btn:hover {
+            background: #276749;
+            transform: translateY(-2px);
+        }
+
+        /* Post Cards */
+        .post {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .post:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #2f855a, #38a169);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+
+        .author-info span {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .post-category {
+            background: #e6fffa;
+            color: #2f855a;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .post-title {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin-bottom: 0.7rem;
+        }
+
+        .post-content {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .post-stats {
+            display: flex;
+            gap: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .post-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .post-stat:hover {
+            color: #2f855a;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-title {
+            color: #2f855a;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Active Members */
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .member {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .member:hover {
+            background: #f7fafc;
+        }
+
+        .member-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #38a169, #68d391);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #38a169;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+
+        /* Categories */
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            background: #e6fffa;
+            color: #2f855a;
+        }
+
+        .category-count {
+            background: #e2e8f0;
+            color: #666;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .action-btn {
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .action-btn:hover {
+            border-color: #2f855a;
+            background: #f7fafc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                gap: 1.5rem;
+            }
+            
+            .post-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Floating elements */
+        .floating-help {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #2f855a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(47, 133, 90, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-help:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -83,16 +447,336 @@
                 <li><a href="map.html">Campus Map</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="directory.html">Directory</a></li>
-                <li><a href="community.html" aria-current="page">Community</a></li>
+                <li><a href="community.html" class="active">Community</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Community Forum</h1>
-        <p>Connect with fellow students and staff to share sustainability tips, organize events, and collaborate on green initiatives.</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 Hochschule Aalen Sustainability Hub | A student project for sustainable campus living</p>
-    </footer>
+
+    <section class="hero">
+        <div class="container">
+            <h1>💬 Community Forum</h1>
+            <p>Connect, share ideas, and collaborate on sustainability projects with fellow students and staff</p>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">347</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">Posts This Week</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Projects Started</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Solutions Shared</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="main-content">
+            <div class="forum-feed">
+                <div class="feed-header">
+                    <h2 class="feed-title">Latest Discussions</h2>
+                    <button class="new-post-btn">✏️ New Post</button>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">MS</div>
+                            <div class="author-info">
+                                <h4>Maria Schmidt</h4>
+                                <span>Industrial Engineering • 2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="post-category">Project Collaboration</div>
+                    </div>
+                    <h3 class="post-title">🔋 Looking for teammates: Campus Battery Recycling Initiative</h3>
+                    <p class="post-content">Hi everyone! I'm starting a project to set up battery collection points across campus. Need 3-4 people interested in environmental engineering and logistics. We already have approval from facility management!</p>
+                    <div class="post-stats">
+                        <div class="post-stat">👍 12</div>
+                        <div class="post-stat">💬 8 replies</div>
+                        <div class="post-stat">🔗 Share</div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">LK</div>
+                            <div class="author-info">
+                                <h4>Lucas Kowalski</h4>
+                                <span>Mechanical Engineering • 5 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="post-category">Tips & Tricks</div>
+                    </div>
+                    <h3 class="post-title">💡 DIY LED Desk Lamp from E-Waste - Tutorial</h3>
+                    <p class="post-content">Just finished building a super bright desk lamp using old computer parts and broken phones! Total cost: 8€. Perfect for long study sessions and way more sustainable than buying new. Step-by-step guide attached!</p>
+                    <div class="post-stats">
+                        <div class="post-stat">👍 28</div>
+                        <div class="post-stat">💬 15 replies</div>
+                        <div class="post-stat">📎 3 attachments</div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">AT</div>
+                            <div class="author-info">
+                                <h4>Dr. Anna Thompson</h4>
+                                <span>Faculty • 1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="post-category">Campus News</div>
+                    </div>
+                    <h3 class="post-title">🎉 Great news: Solar panels approved for Building G!</h3>
+                    <p class="post-content">Thanks to student initiatives and your feedback, we've received final approval for installing 150 solar panels on Building G. Installation starts August 2025. This will cover 40% of the building's energy needs!</p>
+                    <div class="post-stats">
+                        <div class="post-stat">👍 67</div>
+                        <div class="post-stat">💬 23 replies</div>
+                        <div class="post-stat">🎯 Pin</div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">RH</div>
+                            <div class="author-info">
+                                <h4>Rajesh Patel</h4>
+                                <span>Computer Science • 2 days ago</span>
+                            </div>
+                        </div>
+                        <div class="post-category">Questions</div>
+                    </div>
+                    <h3 class="post-title">❓ Best apps for tracking personal carbon footprint?</h3>
+                    <p class="post-content">Hey! Looking for recommendations for mobile apps that accurately track daily CO2 emissions. Tried a few but they seem inaccurate for European lifestyle. What do you use?</p>
+                    <div class="post-stats">
+                        <div class="post-stat">👍 19</div>
+                        <div class="post-stat">💬 31 replies</div>
+                        <div class="post-stat">🔗 Share</div>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="avatar">SJ</div>
+                            <div class="author-info">
+                                <h4>Sophie Johnson</h4>
+                                <span>International Business • 3 days ago</span>
+                            </div>
+                        </div>
+                        <div class="post-category">Events</div>
+                    </div>
+                    <h3 class="post-title">🌱 Organizing campus garden workday - who's in?</h3>
+                    <p class="post-content">Planning to expand our rooftop garden this weekend! Need volunteers for planting herbs and vegetables. Tools provided, just bring work gloves. Pizza provided afterwards! 🍕</p>
+                    <div class="post-stats">
+                        <div class="post-stat">👍 45</div>
+                        <div class="post-stat">💬 18 replies</div>
+                        <div class="post-stat">📅 Add to calendar</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">🟢 Active Members</h3>
+                    <div class="member-list">
+                        <div class="member">
+                            <div class="member-avatar">MS</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Maria Schmidt</div>
+                                <div style="font-size: 0.8rem; color: #666;">Project Lead</div>
+                            </div>
+                            <div class="online-dot"></div>
+                        </div>
+                        <div class="member">
+                            <div class="member-avatar">AT</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Dr. Thompson</div>
+                                <div style="font-size: 0.8rem; color: #666;">Sustainability Officer</div>
+                            </div>
+                            <div class="online-dot"></div>
+                        </div>
+                        <div class="member">
+                            <div class="member-avatar">LK</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Lucas K.</div>
+                                <div style="font-size: 0.8rem; color: #666;">DIY Expert</div>
+                            </div>
+                            <div class="online-dot"></div>
+                        </div>
+                        <div class="member">
+                            <div class="member-avatar">SJ</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Sophie J.</div>
+                                <div style="font-size: 0.8rem; color: #666;">Event Organizer</div>
+                            </div>
+                        </div>
+                        <div class="member">
+                            <div class="member-avatar">RH</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Rajesh P.</div>
+                                <div style="font-size: 0.8rem; color: #666;">Tech Enthusiast</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">📂 Categories</h3>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <span>🤝 Project Collaboration</span>
+                            <span class="category-count">12</span>
+                        </div>
+                        <div class="category-item">
+                            <span>💡 Tips & Tricks</span>
+                            <span class="category-count">28</span>
+                        </div>
+                        <div class="category-item">
+                            <span>❓ Questions</span>
+                            <span class="category-count">19</span>
+                        </div>
+                        <div class="category-item">
+                            <span>📰 Campus News</span>
+                            <span class="category-count">8</span>
+                        </div>
+                        <div class="category-item">
+                            <span>📅 Events</span>
+                            <span class="category-count">15</span>
+                        </div>
+                        <div class="category-item">
+                            <span>🏪 Local Recommendations</span>
+                            <span class="category-count">22</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">⚡ Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="action-btn">
+                            <span>🎯</span>
+                            <div>
+                                <div style="font-weight: 600;">Start New Project</div>
+                                <div style="font-size: 0.8rem; color: #666;">Find collaborators</div>
+                            </div>
+                        </button>
+                        <button class="action-btn">
+                            <span>📊</span>
+                            <div>
+                                <div style="font-weight: 600;">Share Success Story</div>
+                                <div style="font-size: 0.8rem; color: #666;">Inspire others</div>
+                            </div>
+                        </button>
+                        <button class="action-btn">
+                            <span>❓</span>
+                            <div>
+                                <div style="font-weight: 600;">Ask for Help</div>
+                                <div style="font-size: 0.8rem; color: #666;">Get expert advice</div>
+                            </div>
+                        </button>
+                        <button class="action-btn">
+                            <span>🏪</span>
+                            <div>
+                                <div style="font-weight: 600;">Recommend Business</div>
+                                <div style="font-size: 0.8rem; color: #666;">Share local finds</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <button class="floating-help" title="Community Guidelines">❓</button>
+
+    <script>
+        // Post interaction handlers
+        document.querySelectorAll('.post-stat').forEach(stat => {
+            stat.addEventListener('click', function() {
+                if (this.textContent.includes('👍')) {
+                    const count = parseInt(this.textContent.match(/\d+/)[0]);
+                    this.textContent = `👍 ${count + 1}`;
+                    this.style.color = '#2f855a';
+                }
+            });
+        });
+
+        // New post button
+        document.querySelector('.new-post-btn').addEventListener('click', function() {
+            alert('🚀 New post editor opening soon! For now, share your ideas in existing threads.');
+        });
+
+        // Quick action buttons
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.querySelector('div div').textContent;
+                alert(`📝 ${action} feature coming soon! Join our beta testing group.`);
+            });
+        });
+
+        // Category filtering
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const category = this.textContent.trim();
+                alert(`🔍 Filtering by: ${category}`);
+            });
+        });
+
+        // Member profile clicks
+        document.querySelectorAll('.member').forEach(member => {
+            member.addEventListener('click', function() {
+                const name = this.querySelector('div div').textContent;
+                alert(`👤 ${name}'s profile coming soon!`);
+            });
+        });
+
+        // Floating help button
+        document.querySelector('.floating-help').addEventListener('click', function() {
+            alert(`📋 Community Guidelines:
+            
+✅ Be respectful and constructive
+✅ Share knowledge and resources
+✅ Focus on sustainability topics
+✅ Help newcomers get involved
+❌ No spam or self-promotion
+❌ Keep discussions on-topic
+
+Questions? Contact: community@hs-aalen.de`);
+        });
+
+        // Auto-update stats
+        function updateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                if (Math.random() > 0.95) { // 5% chance to update
+                    const current = parseInt(stat.textContent);
+                    stat.textContent = current + 1;
+                    stat.style.color = '#38a169';
+                    setTimeout(() => {
+                        stat.style.color = '#2f855a';
+                    }, 1000);
+                }
+            });
+        }
+
+        // Update stats every 30 seconds
+        setInterval(updateStats, 30000);
+    </script>
 </body>
 </html>
