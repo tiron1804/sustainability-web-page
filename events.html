@@ -1,98 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Green Campus - Events</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Events - Green Campus Hochschule Aalen</title>
     <style>
-        /* Basic styles similar to tips.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 1rem;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
         }
-        header {
-            background-color: #2f855a;
-            padding: 1rem 2rem;
-            color: white;
-        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
             font-size: 1.5rem;
             font-weight: bold;
+            color: #2f855a;
+            text-decoration: none;
         }
-        .nav-links {
-            list-style: none;
+
+        .logo::before {
+            content: "🌱";
+            margin-right: 10px;
+        }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #2f855a;
+            text-decoration: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2f855a, #38a169);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #2f855a;
+            color: white;
+            border-color: #2f855a;
+        }
+
+        /* Events Grid */
+        .events-section {
+            padding: 3rem 0;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-header {
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #2f855a, #38a169);
+            color: white;
+            position: relative;
+        }
+
+        .event-date {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .event-category {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .event-body {
+            padding: 1.5rem;
+        }
+
+        .event-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-description {
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+        }
+
+        .event-actions {
             display: flex;
             gap: 1rem;
         }
-        .nav-links li a {
-            color: white;
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
             text-decoration: none;
-            font-weight: 500;
-        }
-        .nav-links li a[aria-current="page"] {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        h1 {
-            color: #2f855a;
-            margin-bottom: 1rem;
-        }
-        footer {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
             text-align: center;
-            padding: 1rem;
-            background-color: #ddd;
-            margin-top: 3rem;
-            font-size: 0.9rem;
         }
-        a {
+
+        .btn-primary {
+            background: #2f855a;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
             color: #2f855a;
+            border: 2px solid #2f855a;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(47, 133, 90, 0.3);
+        }
+
+        /* Special event highlights */
+        .featured-event {
+            border: 3px solid #f6d55c;
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #f6d55c;
+            color: #2d3748;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .upcoming-event {
+            border-left: 5px solid #38a169;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .event-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Calendar View Toggle */
+        .view-toggle {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .toggle-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: #2f855a;
+            color: white;
         }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">Green Campus</div>
-            <ul class="nav-links">
-                <li><a href="main page.html">Home</a></li>
-                <li><a href="tips.html">Tips</a></li>
-                <li><a href="mobility.html">Mobility</a></li>
-                <li><a href="calculator.html">Calculator</a></li>
-                <li><a href="map.html">Campus Map</a></li>
-                <li><a href="events.html" aria-current="page">Events</a></li>
-                <li><a href="directory.html">Directory</a></li>
-                <li><a href="community.html">Community</a></li>
-            </ul>
+            <a href="index.html" class="logo">Green Campus</a>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Events</span>
+            </div>
         </nav>
     </header>
-    <main>
-        <h1>Events</h1>
-        <p>Join sustainability workshops, clean-up events, and green fairs. Connect with like-minded students and staff.</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 Hochschule Aalen Sustainability Hub | A student project for sustainable campus living</p>
-    </footer>
+
+    <section class="hero">
+        <div class="container">
+            <h1>🗓️ Sustainability Events</h1>
+            <p>Join our community initiatives and make a difference at Hochschule Aalen</p>
+        </div>
+    </section>
+
+    <section class="filter-bar">
+        <div class="container">
+            <div class="view-toggle">
+                <button class="toggle-btn active">Grid View</button>
+                <button class="toggle-btn">Calendar View</button>
+            </div>
+            <div class="filters">
+                <button class="filter-btn active">All Events</button>
+                <button class="filter-btn">Workshops</button>
+                <button class="filter-btn">Campus Actions</button>
+                <button class="filter-btn">Community</button>
+                <button class="filter-btn">Educational</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="events-section">
+        <div class="container">
+            <div class="events-grid">
+                
+                <!-- Featured Event -->
+                <div class="event-card featured-event">
+                    <div class="featured-badge">⭐ Featured</div>
+                    <div class="event-header">
+                        <div class="event-date">Jul 15</div>
+                        <div class="event-category">Campus Action</div>
+                        <h3 class="event-title">Campus Solar Panel Installation Day</h3>
+                        <p class="event-subtitle">Help install our new renewable energy system</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <span>⏰</span> 9:00 AM - 4:00 PM
+                            </div>
+                            <div class="event-detail">
+                                <span>📍</span> Main Campus Roof
+                            </div>
+                            <div class="event-detail">
+                                <span>👥</span> 50 volunteers needed
+                            </div>
+                        </div>
+                        <p class="event-description">Join engineering students and local experts to install 200 solar panels on our main building. Learn about renewable energy while contributing to our carbon-neutral goal by 2030.</p>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Register Now</a>
+                            <a href="#" class="btn btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repair Café (Real Event) -->
+                <div class="event-card upcoming-event">
+                    <div class="event-header">
+                        <div class="event-date">Jul 8</div>
+                        <div class="event-category">Community</div>
+                        <h3 class="event-title">Repair Café Aalen</h3>
+                        <p class="event-subtitle">Fix it, don't throw it away!</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <span>⏰</span> 2:00 PM - 6:00 PM
+                            </div>
+                            <div class="event-detail">
+                                <span>📍</span> Aula Building, Beethovenstraße 1
+                            </div>
+                            <div class="event-detail">
+                                <span>🔧</span> Tools provided
+                            </div>
+                        </div>
+                        <p class="event-description">Bring your broken items and repair them with help from our experts. Electronics, textiles, bikes, and more. Reduce waste while learning valuable skills!</p>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Join Event</a>
+                            <a href="#" class="btn btn-secondary">What to Bring</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workshop Event -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">Jul 22</div>
+                        <div class="event-category">Workshop</div>
+                        <h3 class="event-title">Zero Waste Lifestyle Workshop</h3>
+                        <p class="event-subtitle">Practical tips for sustainable living</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <span>⏰</span> 6:00 PM - 8:30 PM
+                            </div>
+                            <div class="event-detail">
+                                <span>📍</span> Room G1.15
+                            </div>
+                            <div class="event-detail">
+                                <span>💰</span> Free for students
+                            </div>
+                        </div>
+                        <p class="event-description">Learn to make DIY cleaning products, reusable items, and meal prep containers. Take home starter kits and connect with like-minded students.</p>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Register</a>
+                            <a href="#" class="btn btn-secondary">Materials List</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Educational Event -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">Aug 5</div>
+                        <div class="event-category">Educational</div>
+                        <h3 class="event-title">Climate Science Lecture Series</h3>
+                        <p class="event-subtitle">Understanding climate change impacts</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <span>⏰</span> 4:00 PM - 5:30 PM
+                            </div>
+                            <div class="event-detail">
+                                <span>📍</span> Main Auditorium
+                            </div>
+                            <div class="event-detail">
+                                <span>🎓</span> Guest speaker
+                            </div>
+                        </div>
+                        <p class="event-description">Dr. Maria Schmidt from PIK Potsdam presents latest research on regional climate impacts in Baden-Württemberg. Q&A session included.</p>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Reserve Seat</a>
+                            <a href="#" class="btn btn-secondary">Speaker Bio</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campus Action -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">Aug 12</div>
+                        <div class="event-category">Campus Action</div>
+                        <h3 class="event-title">Campus Biodiversity Survey</h3>
+                        <p class="event-subtitle">Document local flora and fauna</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <span>⏰</span> 8:00 AM - 12:00 PM
+                            </div>
+                            <div class="event-detail">
+                                <span>📍</span> Campus Grounds
+                            </div>
+                            <div class="event-detail">
+                                <span>📱</span> Bring smartphone
+                            </div>
+                        </div>
+                        <p class="event-description">Help Biology students catalog campus species using iNaturalist app. Create a database for future conservation projects and research.</p>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">Volunteer</a>
+                            <a href="#" class="btn btn-secondary">Download App</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Event -->
+                <div class="event-card">
+                    <div class="event-header">
+                        <div class="event-date">Aug 19</div>
+                        <div class="event-category">Community</div>
+                        <h3 class="event-title">Sustainable Student Swap Meet</h3>
+                        <p class="event-subtitle">Trade, sell, and share resources</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-details">
+                            <div class="event-detail">
+                                <span>⏰</span> 11:00 AM - 4:00 PM
+                            </div>
+                            <div class="event-detail">
+                                <span>📍</span> Student Center Plaza
+                            </div>
+                            <div class="event-detail">
+                                <span>💫</span> Free admission
+                            </div>
+                        </div>
+                        <p class="event-description">Exchange textbooks, furniture, electronics, and clothes. Reduce waste while finding great deals. Refreshments from local organic vendors.</p>
+                        <div class="event-actions">
+                            <a href="#" class="btn btn-primary">List Items</a>
+                            <a href="#" class="btn btn-secondary">Browse Items</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#" class="btn btn-primary">📅 View Full Calendar</a>
+                <a href="#" class="btn btn-secondary">💡 Suggest Event</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const eventCards = document.querySelectorAll('.event-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.textContent.toLowerCase();
+                
+                eventCards.forEach(card => {
+                    const category = card.querySelector('.event-category').textContent.toLowerCase();
+                    
+                    if (filter === 'all events' || category.includes(filter.replace(' events', ''))) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // View toggle functionality
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (btn.textContent === 'Calendar View') {
+                    alert('Calendar view coming soon! 📅');
+                }
+            });
+        });
+
+        // Animate cards on load
+        const cards = document.querySelectorAll('.event-card');
+        cards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    </script>
 </body>
 </html>
