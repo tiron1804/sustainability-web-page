@@ -1,98 +1,755 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Green Campus - Campus Map</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Map - Green Campus</title>
     <style>
-        /* Basic styles similar to tips.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 1rem;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
-        header {
-            background-color: #2f855a;
-            padding: 1rem 2rem;
-            color: white;
-        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
             font-size: 1.5rem;
             font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-        .nav-links li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .nav-links li a[aria-current="page"] {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        h1 {
             color: #2f855a;
+        }
+
+        .logo::before {
+            content: "🌱";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #2f855a;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0 4rem;
+        }
+
+        .hero-section {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section h1 {
+            color: #2f855a;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #ddd;
-            margin-top: 3rem;
-            font-size: 0.9rem;
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        a {
+
+        /* Map Container */
+        .map-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .map-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .campus-map {
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fff4 100%);
+            border-radius: 15px;
+            position: relative;
+            border: 2px solid #2f855a;
+            overflow: hidden;
+        }
+
+        /* Campus Buildings */
+        .building {
+            position: absolute;
+            background: #4a5568;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            border: 2px solid #2d3748;
+        }
+
+        .building:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .building.selected {
+            background: #2f855a;
+            border-color: #38a169;
+        }
+
+        /* Building positions and sizes */
+        .hauptgebäude { top: 200px; left: 280px; width: 100px; height: 80px; }
+        .mensa { top: 450px; left: 170px; width: 60px; height: 60px; background: #f56565; }
+        .parkhaus { top:20px; left: 210px; width: 80px; height: 60px; background: #718096; }
+        .cafeteria { top: 170px; left: 280px; width: 70px; height: 20px; background: #38a169; }
+
+        /* Sustainable Features */
+        .feature-point {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-point:hover {
+            transform: scale(1.3);
+            z-index: 20;
+        }
+
+        .bike-rack { background: #3182ce; top: 360px; left: 210px; }
+        .water-station { background: #38a169; top: 160px; left: 380px; }
+        .garden { background: #68d391; top: 380px; left: 280px; }
+        .ev-charging { background: #805ad5; top: 380px; left: 400px; }
+
+        /* Paths */
+        .path {
+            position: absolute;
+            background: #a0aec0;
+            border-radius: 2px;
+        }
+
+        .path-horizontal { height: 8px; }
+        .path-vertical { width: 8px; }
+
+        .main-path { top: 300px; left: 50px; width: 450px; }
+        .side-path { top: 150px; left: 300px; height: 200px; }
+
+        /* Legend */
+        .legend {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .legend h3 {
+            color: #2f855a;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .legend-section {
+            margin-bottom: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: #f7fafc;
+            transform: translateX(5px);
+        }
+
+        .legend-item.active {
+            background: #f0fff4;
+            border-left: 4px solid #2f855a;
+        }
+
+        .legend-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .legend-text {
+            flex: 1;
+        }
+
+        .legend-title {
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .legend-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .info-panel.visible {
+            transform: translateY(0);
+        }
+
+        .info-panel h4 {
+            color: #2f855a;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f56565;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #2f855a;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
             color: #2f855a;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .map-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .legend {
+                order: -1;
+                max-height: 300px;
+            }
+            
+            .campus-map {
+                height: 400px;
+            }
+            
+            .building {
+                font-size: 0.7rem;
+            }
+            
+            .feature-point {
+                width: 25px;
+                height: 25px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            background: white;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            border-color: #2f855a;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #2f855a;
+            color: white;
+            border-color: #2f855a;
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
+        <nav>
             <div class="logo">Green Campus</div>
             <ul class="nav-links">
                 <li><a href="main page.html">Home</a></li>
                 <li><a href="tips.html">Tips</a></li>
                 <li><a href="mobility.html">Mobility</a></li>
                 <li><a href="calculator.html">Calculator</a></li>
-                <li><a href="map.html" aria-current="page">Campus Map</a></li>
+                <li><a href="map.html">Campus Map</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="directory.html">Directory</a></li>
                 <li><a href="community.html">Community</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Campus Map</h1>
-        <p>Find bike racks, water refill stations, recycling points, and sustainable dining options across campus.</p>
+
+    <main class="container">
+        <div class="hero-section">
+            <h1>🗺️ Interactive Campus Map</h1>
+            <p>Entdecke alle nachhaltigen Einrichtungen und Services auf dem Campus der Hochschule Aalen. Finde Fahrradständer, Wasserstationen, Recyclingpunkte und mehr!</p>
+        </div>
+
+        <div class="filter-controls">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Alle anzeigen</button>
+                <button class="filter-btn" data-filter="mobility">🚲 Mobilität</button>
+                <button class="filter-btn" data-filter="water">💧 Wasser</button>
+                <button class="filter-btn" data-filter="energy">⚡ Energie</button>
+                <button class="filter-btn" data-filter="nature">🌱 Natur</button>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div class="map-section">
+<div class="campus-map" id="campusMap">
+    <img src="campus.jpg" alt="Campus Plan" style="width: 100%; height: 100%; object-fit: contain; border-radius: 15px; border: 2px solid #2f855a;">
+    <!-- Buildings -->
+    <div class="building hauptgebäude" data-info="hauptgebäude">Hauptgebäude</div>
+    <div class="building mensa" data-info="mensa">Mensa</div>
+    <div class="building parkhaus" data-info="parkhaus">Parkhaus</div>
+    <div class="building cafeteria" data-info="cafeteria">Cafeteria</div>
+
+    <!-- Sustainable Features -->
+    <div class="feature-point bike-rack" data-info="bike-rack" data-filter="mobility">🚲</div>
+    <div class="feature-point water-station" data-info="water-station" data-filter="water">💧</div>
+    <div class="feature-point garden" data-info="garden" data-filter="nature">🌱</div>
+    <div class="feature-point ev-charging" data-info="ev-charging" data-filter="mobility">🔌</div>
+</div>
+
+                <div class="info-panel" id="infoPanel">
+                    <button class="info-close" onclick="closeInfo()">×</button>
+                    <h4 id="infoTitle">Standort Info</h4>
+                    <p id="infoDescription">Klicke auf einen Punkt auf der Karte für mehr Informationen.</p>
+                    <div id="infoDetails"></div>
+                </div>
+            </div>
+
+            <div class="legend">
+                <h3>🎯 Campus Einrichtungen</h3>
+                
+                <div class="legend-section">
+                    <h4 style="color: #4a5568; margin-bottom: 1rem;">Gebäude</h4>
+                    <div class="legend-item" data-target="hauptgebäude">
+                        <div class="legend-icon" style="background: #4a5568;">🏢</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Hauptgebäude</div>
+                            <div class="legend-description">Verwaltung & Hörsäle</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="mensa">
+                        <div class="legend-icon" style="background: #f56565;">🍽️</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Mensa</div>
+                            <div class="legend-description">Nachhaltige Verpflegung</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="bibliothek">
+                        <div class="legend-icon" style="background: #3182ce;">📚</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Bibliothek</div>
+                            <div class="legend-description">Lern- & Arbeitsplätze</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="legend-section">
+                    <h4 style="color: #4a5568; margin-bottom: 1rem;">Nachhaltige Services</h4>
+                    <div class="legend-item" data-target="bike-rack">
+                        <div class="legend-icon" style="background: #3182ce;">🚲</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Fahrradständer</div>
+                            <div class="legend-description">Sichere Abstellplätze</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="water-station">
+                        <div class="legend-icon" style="background: #38a169;">💧</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Wasserstationen</div>
+                            <div class="legend-description">Kostenlose Trinkwasser-Refill</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="recycling">
+                        <div class="legend-icon" style="background: #f56565;">♻️</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Recycling</div>
+                            <div class="legend-description">Mülltrennung & Wertstoffsammlung</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="solar-panel">
+                        <div class="legend-icon" style="background: #f6ad55;">☀️</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Solaranlage</div>
+                            <div class="legend-description">Erneuerbare Energie</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="garden">
+                        <div class="legend-icon" style="background: #68d391;">🌱</div>
+                        <div class="legend-text">
+                            <div class="legend-title">Campus-Garten</div>
+                            <div class="legend-description">Biodiversität & Erholung</div>
+                        </div>
+                    </div>
+                    <div class="legend-item" data-target="ev-charging">
+                        <div class="legend-icon" style="background: #805ad5;">🔌</div>
+                        <div class="legend-text">
+                            <div class="legend-title">E-Ladestation</div>
+                            <div class="legend-description">Elektromobilität</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🚲</div>
+                <div class="stat-number">156</div>
+                <div class="stat-label">Fahrradparkplätze</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💧</div>
+                <div class="stat-number">12</div>
+                <div class="stat-label">Wasserstationen</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">♻️</div>
+                <div class="stat-number">24</div>
+                <div class="stat-label">Recyclingpunkte</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🌱</div>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Grünflächen</div>
+            </div>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2025 Hochschule Aalen Sustainability Hub | A student project for sustainable campus living</p>
-    </footer>
+
+    <script>
+        const infoData = {
+            'hauptgebäude': {
+                title: '🏢 Hauptgebäude',
+                description: 'Das Herzstück des Campus mit modernen Hörsälen und nachhaltiger Gebäudetechnik.',
+                details: ['LED-Beleuchtung in allen Räumen', 'Intelligente Heizungssteuerung', 'Papierloses Büro-System', 'Energieeffiziente Fenster']
+            },
+            'mensa': {
+                title: '🍽️ Mensa',
+                description: 'Nachhaltige Verpflegung mit regionalen und Bio-Produkten.',
+                details: ['50% vegetarische/vegane Gerichte', 'Regionale Lieferanten bevorzugt', 'Kompostierung von Bioabfall', 'Mehrwegsystem für Getränke']
+            },
+            'parkhaus': {
+                title: '🚗 Parkhaus',
+                description: 'Parkhaus mit vielen Parkplätzen.',
+                details: ['Kostenpflichtig', 'Viele Parkplätze', 'Kurze Wege zu den Gebäuden']
+            },
+            'bike-rack': {
+                title: '🚲 Fahrradständer',
+                description: 'Sichere und überdachte Abstellplätze für Fahrräder.',
+                details: ['156 Stellplätze verfügbar', 'Diebstahlschutz', 'E-Bike Lademöglichkeit', 'Werkzeugstation vorhanden']
+            },
+            'water-station': {
+                title: '💧 Wasserstation',
+                description: 'Kostenlose Trinkwasser-Auffüllstation für alle Studierenden.',
+                details: ['Gefiltertes Leitungswasser', '24/7 verfügbar', 'Kalt- und Raumtemperatur', 'Spart 5000+ Plastikflaschen/Jahr']
+            },
+            'recycling': {
+                title: '♻️ Recycling-Station',
+                description: 'Umfassende Mülltrennung und Wertstoffsammlung.',
+                details: ['Papier, Plastik, Glas, Bio', 'Batteriesammlung', 'Elektronikschrott-Abgabe', 'Kork- und Kronkorken-Sammlung']
+            },
+            'cafeteria': {
+                title: '🍽️ Cafeteria',
+                description: 'Moderne Cafeteria für nachhaltige und gesunde Verpflegung.',
+                details: ['Platz für viele Personen', 'Täglich neue Angebote']
+            },
+            'garden': {
+                title: '🌱 Campus-Garten',
+                description: 'Gemeinschaftsgarten für Studierende und Mitarbeiter.',
+                details: ['Biologischer Anbau', 'Lehrprojekte Integration', 'Bienenfreundliche Pflanzen', 'Kompostieranlage']
+            },
+            'ev-charging': {
+                title: '🔌 E-Ladestation',
+                description: 'Ladestation für Elektrofahrzeuge mit Ökostrom.',
+                details: ['2 Ladepunkte verfügbar', '100% Ökostrom', 'Typ 2 Stecker', 'App-basierte Bezahlung']
+            }
+        };
+
+        // Initialize map interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click listeners to map elements
+            document.querySelectorAll('[data-info]').forEach(element => {
+                element.addEventListener('click', function() {
+                    showInfo(this.dataset.info);
+                    highlightElement(this);
+                });
+            });
+
+            // Add click listeners to legend items
+            document.querySelectorAll('.legend-item[data-target]').forEach(item => {
+                item.addEventListener('click', function() {
+                    const target = this.dataset.target;
+                    const element = document.querySelector(`[data-info="${target}"]`);
+                    if (element) {
+                        showInfo(target);
+                        highlightElement(element);
+                        highlightLegendItem(this);
+                    }
+                });
+            });
+
+            // Filter functionality
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterFeatures(this.dataset.filter);
+                    updateActiveFilter(this);
+                });
+            });
+        });
+
+        function showInfo(infoKey) {
+            const info = infoData[infoKey];
+            if (!info) return;
+
+            const panel = document.getElementById('infoPanel');
+            const title = document.getElementById('infoTitle');
+            const description = document.getElementById('infoDescription');
+            const details = document.getElementById('infoDetails');
+
+            title.textContent = info.title;
+            description.textContent = info.description;
+            
+            if (info.details) {
+                details.innerHTML = '<ul style="margin-top: 1rem; padding-left: 1rem;">' +
+                    info.details.map(detail => `<li style="margin-bottom: 0.5rem;">${detail}</li>`).join('') +
+                    '</ul>';
+            }
+
+            panel.classList.add('visible');
+        }
+
+        function closeInfo() {
+            document.getElementById('infoPanel').classList.remove('visible');
+            // Remove all highlights
+            document.querySelectorAll('.building, .feature-point').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelectorAll('.legend-item').forEach(el => {
+                el.classList.remove('active');
+            });
+        }
+
+        function highlightElement(element) {
+            // Remove previous highlights
+            document.querySelectorAll('.building, .feature-point').forEach(el => {
+                el.classList.remove('selected');
+            });
+            // Add highlight to clicked element
+            element.classList.add('selected');
+        }
+
+        function highlightLegendItem(item) {
+            // Remove previous highlights
+            document.querySelectorAll('.legend-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Add highlight to clicked item
+            item.classList.add('active');
+        }
+
+        function filterFeatures(filter) {
+            const features = document.querySelectorAll('.feature-point');
+            
+            features.forEach(feature => {
+                if (filter === 'all' || feature.dataset.filter === filter) {
+                    feature.style.display = 'flex';
+                    feature.style.opacity = '1';
+                } else {
+                    feature.style.opacity = '0.3';
+                }
+            });
+        }
+
+        function updateActiveFilter(activeBtn) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            activeBtn.classList.add('active');
+        }
+
+        // Close info panel when clicking outside
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('infoPanel');
+            const map = document.getElementById('campusMap');
+            
+            if (!panel.contains(e.target) && !map.contains(e.target)) {
+                closeInfo();
+            }
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.building, .feature-point').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('selected')) {
+                    this.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
