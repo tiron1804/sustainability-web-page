@@ -1,73 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Green Campus - Mobility</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Mobility Hub - Hochschule Aalen</title>
     <style>
-        /* Basic styles similar to tips.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 1rem;
+            color: #2d3748;
+            background: #f7fafc;
         }
-        header {
-            background-color: #2f855a;
-            padding: 1rem 2rem;
-            color: white;
-        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
             font-size: 1.5rem;
             font-weight: bold;
+            color: #2f855a;
         }
+
+        .logo::before {
+            content: "🌱";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
         .nav-links {
-            list-style: none;
             display: flex;
-            gap: 1rem;
+            list-style: none;
+            gap: 2rem;
         }
-        .nav-links li a {
-            color: white;
+
+        .nav-links a {
             text-decoration: none;
+            color: #4a5568;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
-        .nav-links li a[aria-current="page"] {
-            text-decoration: underline;
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #2f855a;
         }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2f855a, #38a169);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
         main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            padding: 4rem 0;
         }
-        h1 {
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d3748;
+        }
+
+        /* Transport Options Grid */
+        .transport-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .transport-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #2f855a;
+        }
+
+        .transport-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .transport-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .transport-card h3 {
             color: #2f855a;
             margin-bottom: 1rem;
         }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #ddd;
-            margin-top: 3rem;
-            font-size: 0.9rem;
+
+        .transport-details {
+            margin: 1rem 0;
         }
-        a {
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .detail-item::before {
+            content: "✓";
             color: #2f855a;
+            font-weight: bold;
+            margin-right: 0.5rem;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #2f855a;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            background: #276749;
+            transform: translateY(-2px);
+        }
+
+        /* Route Planner */
+        .route-planner {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .planner-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .form-group input, .form-group select {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2f855a;
+        }
+
+        .btn-plan {
+            background: #2f855a;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-plan:hover {
+            background: #276749;
+        }
+
+        /* CO2 Comparison */
+        .co2-comparison {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 4rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .comparison-item {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .co2-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e53e3e;
+            margin-bottom: 0.5rem;
+        }
+
+        .co2-amount.low {
+            color: #38a169;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .planner-form {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -78,7 +312,7 @@
             <ul class="nav-links">
                 <li><a href="main page.html">Home</a></li>
                 <li><a href="tips.html">Tips</a></li>
-                <li><a href="mobility.html" aria-current="page">Mobility</a></li>
+                <li><a href="mobility.html" class="active">Mobility</a></li>
                 <li><a href="calculator.html">Calculator</a></li>
                 <li><a href="map.html">Campus Map</a></li>
                 <li><a href="events.html">Events</a></li>
@@ -87,12 +321,195 @@
             </ul>
         </nav>
     </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>🚌 Green Mobility Hub</h1>
+            <p>Discover sustainable transport options to get around Aalen and reach Hochschule Aalen campus</p>
+        </div>
+    </section>
+
     <main>
-        <h1>Mobility</h1>
-        <p>Welcome to the Green Mobility Hub. Discover eco-friendly transport options including bus routes, bike sharing, e-scooters, and carsharing to get around Aalen sustainably.</p>
+        <div class="container">
+            <section class="route-planner fade-in">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #2f855a;">🗺️ Plan Your Sustainable Route</h2>
+                <form class="planner-form">
+                    <div class="form-group">
+                        <label for="from">From</label>
+                        <input type="text" id="from" placeholder="Your location in Aalen">
+                    </div>
+                    <div class="form-group">
+                        <label for="transport">Transport Mode</label>
+                        <select id="transport">
+                            <option value="bike">🚴‍♂️ Bicycle</option>
+                            <option value="bus">🚌 Public Bus</option>
+                            <option value="walk">🚶‍♂️ Walking</option>
+                            <option value="escooter">🛴 E-Scooter</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-plan">Plan Route</button>
+                </form>
+            </section>
+
+            <h2 class="section-title">Sustainable Transport Options</h2>
+            
+            <div class="transport-grid">
+                <div class="transport-card fade-in">
+                    <div class="transport-icon">🚌</div>
+                    <h3>Public Transport</h3>
+                    <p>Efficient bus connections throughout Aalen and to the university campus.</p>
+                    <div class="transport-details">
+                        <div class="detail-item">Regular services every 15-30 minutes</div>
+                        <div class="detail-item">Student discounts available</div>
+                        <div class="detail-item">Direct routes to campus</div>
+                        <div class="detail-item">Reduced CO₂ emissions per person</div>
+                    </div>
+                    <a href="#" class="btn">View Bus Routes</a>
+                </div>
+
+                <div class="transport-card fade-in">
+                    <div class="transport-icon">🚴‍♂️</div>
+                    <h3>Bicycle</h3>
+                    <p>The most eco-friendly way to get around Aalen and reach campus.</p>
+                    <div class="transport-details">
+                        <div class="detail-item">Bike lanes throughout the city</div>
+                        <div class="detail-item">Secure bike parking on campus</div>
+                        <div class="detail-item">Zero emissions transport</div>
+                        <div class="detail-item">Great exercise and fresh air</div>
+                    </div>
+                    <a href="#" class="btn">Find Bike Routes</a>
+                </div>
+
+                <div class="transport-card fade-in">
+                    <div class="transport-icon">🛴</div>
+                    <h3>E-Scooter Sharing</h3>
+                    <p>Convenient electric scooters available throughout Aalen city center.</p>
+                    <div class="transport-details">
+                        <div class="detail-item">Available 24/7 via mobile app</div>
+                        <div class="detail-item">No parking hassles</div>
+                        <div class="detail-item">Electric powered, low emissions</div>
+                        <div class="detail-item">Perfect for short distances</div>
+                    </div>
+                    <a href="#" class="btn">Download App</a>
+                </div>
+
+                <div class="transport-card fade-in">
+                    <div class="transport-icon">🚗</div>
+                    <h3>Car Sharing</h3>
+                    <p>Share rides with fellow students or use car-sharing services when needed.</p>
+                    <div class="transport-details">
+                        <div class="detail-item">Split costs and emissions</div>
+                        <div class="detail-item">Various car-sharing providers</div>
+                        <div class="detail-item">Electric vehicles available</div>
+                        <div class="detail-item">Great for weekend trips</div>
+                    </div>
+                    <a href="#" class="btn">Find Ride Shares</a>
+                </div>
+
+                <div class="transport-card fade-in">
+                    <div class="transport-icon">🚶‍♂️</div>
+                    <h3>Walking</h3>
+                    <p>The healthiest option for short distances around Aalen city center.</p>
+                    <div class="transport-details">
+                        <div class="detail-item">Pedestrian-friendly city center</div>
+                        <div class="detail-item">Zero environmental impact</div>
+                        <div class="detail-item">Discover local shops and cafes</div>
+                        <div class="detail-item">Free and always available</div>
+                    </div>
+                    <a href="#" class="btn">Walking Maps</a>
+                </div>
+
+                <div class="transport-card fade-in">
+                    <div class="transport-icon">🚄</div>
+                    <h3>Regional Train</h3>
+                    <p>Connect to Stuttgart, Ulm, and other cities via Aalen Hauptbahnhof.</p>
+                    <div class="transport-details">
+                        <div class="detail-item">Student discounts with BaWü-Ticket</div>
+                        <div class="detail-item">Low per-passenger emissions</div>
+                        <div class="detail-item">Reliable long-distance transport</div>
+                        <div class="detail-item">Work or study during travel</div>
+                    </div>
+                    <a href="#" class="btn">Train Schedules</a>
+                </div>
+            </div>
+
+            <div class="co2-comparison fade-in">
+                <h2 style="text-align: center; margin-bottom: 1rem; color: #2d3748;">CO₂ Emissions Comparison</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 2rem;">Emissions per person for a 5km trip to campus</p>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <div class="comparison-icon">🚗</div>
+                        <div class="co2-amount">1.2 kg</div>
+                        <div>Private Car</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-icon">🏍️</div>
+                        <div class="co2-amount">0.8 kg</div>
+                        <div>Motorcycle</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-icon">🚌</div>
+                        <div class="co2-amount low">0.3 kg</div>
+                        <div>Public Bus</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-icon">🛴</div>
+                        <div class="co2-amount low">0.1 kg</div>
+                        <div>E-Scooter</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-icon">🚴‍♂️</div>
+                        <div class="co2-amount low">0.0 kg</div>
+                        <div>Bicycle</div>
+                    </div>
+                    <div class="comparison-item">
+                        <div class="comparison-icon">🚶‍♂️</div>
+                        <div class="co2-amount low">0.0 kg</div>
+                        <div>Walking</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+
     <footer>
-        <p>&copy; 2025 Hochschule Aalen Sustainability Hub | A student project for sustainable campus living</p>
+        <div class="container">
+            <p>&copy; 2025 Hochschule Aalen Green Campus | Sustainable Mobility Solutions</p>
+        </div>
     </footer>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Route planner form submission
+        document.querySelector('.planner-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const from = document.getElementById('from').value;
+            const transport = document.getElementById('transport').value;
+            
+            if (from) {
+                alert(`Planning your ${transport} route from ${from} to Hochschule Aalen campus...`);
+            } else {
+                alert('Please enter your starting location.');
+            }
+        });
+    </script>
 </body>
 </html>
