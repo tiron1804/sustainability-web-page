@@ -1,73 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Green Campus - Directory</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Green Directory - Hochschule Aalen</title>
     <style>
-        /* Basic styles similar to tips.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 1rem;
+            color: #2d3748;
+            background: #f7fafc;
         }
-        header {
-            background-color: #2f855a;
-            padding: 1rem 2rem;
-            color: white;
-        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
             font-size: 1.5rem;
             font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-        .nav-links li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .nav-links li a[aria-current="page"] {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        h1 {
             color: #2f855a;
+        }
+
+        .logo::before {
+            content: "🌱";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #2f855a;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #2f855a, #38a169);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
             margin-bottom: 1rem;
         }
-        footer {
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 0;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
             text-align: center;
-            padding: 1rem;
-            background-color: #ddd;
-            margin-top: 3rem;
-            font-size: 0.9rem;
         }
-        a {
+
+        .upload-area {
+            border: 3px dashed #2f855a;
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #f7fafc;
+        }
+
+        .upload-area:hover {
+            background: #edf2f7;
+            border-color: #38a169;
+        }
+
+        .upload-area.dragover {
+            background: #e6fffa;
+            border-color: #38a169;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #2f855a;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #276749;
+            transform: translateY(-2px);
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .image-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .image-info {
+            padding: 1.5rem;
+        }
+
+        .image-info h3 {
             color: #2f855a;
+            margin-bottom: 0.5rem;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .remove-btn {
+            background: #e53e3e;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .remove-btn:hover {
+            background: #c53030;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .upload-area {
+                padding: 2rem;
+            }
         }
     </style>
 </head>
@@ -82,17 +235,170 @@
                 <li><a href="calculator.html">Calculator</a></li>
                 <li><a href="map.html">Campus Map</a></li>
                 <li><a href="events.html">Events</a></li>
-                <li><a href="directory.html" aria-current="page">Directory</a></li>
+                <li><a href="directory.html" class="active">Directory</a></li>
                 <li><a href="community.html">Community</a></li>
             </ul>
         </nav>
     </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>🏪 Local Green Directory</h1>
+            <p>Discover and share sustainable businesses in Aalen</p>
+        </div>
+    </section>
+
     <main>
-        <h1>Local Green Directory</h1>
-        <p>Discover sustainable businesses in Aalen: zero-waste stores, second-hand shops, organic markets, and more.</p>
+        <div class="container">
+            <section class="upload-section">
+                <h2 style="color: #2f855a; margin-bottom: 1rem;">📸 Share Green Businesses</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Upload photos of sustainable businesses you've discovered in Aalen</p>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📷</div>
+                    <p><strong>Drop images here or click to browse</strong></p>
+                    <p style="color: #666; font-size: 0.9rem;">Maximum 2 images • JPG, PNG, GIF up to 5MB each</p>
+                </div>
+                
+                <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
+                
+                <button class="btn" onclick="document.getElementById('fileInput').click()">
+                    Choose Images
+                </button>
+                
+                <button class="btn" onclick="clearImages()" style="background: #e53e3e;">
+                    Clear All
+                </button>
+                
+                <div id="imageGallery" class="image-gallery"></div>
+            </section>
+        </div>
     </main>
+
     <footer>
-        <p>&copy; 2025 Hochschule Aalen Sustainability Hub | A student project for sustainable campus living</p>
+        <div class="container">
+            <p>&copy; 2025 Hochschule Aalen Green Campus | Local Green Directory</p>
+        </div>
     </footer>
+
+    <script>
+        let uploadedImages = [];
+        const maxImages = 2;
+
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const imageGallery = document.getElementById('imageGallery');
+
+        // Click to upload
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (uploadedImages.length >= maxImages) {
+                alert(`Maximum ${maxImages} images allowed!`);
+                return;
+            }
+
+            Array.from(files).forEach(file => {
+                if (uploadedImages.length >= maxImages) return;
+                
+                if (file.type.startsWith('image/')) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('File size must be less than 5MB');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const imageData = {
+                            id: Date.now() + Math.random(),
+                            src: e.target.result,
+                            name: file.name,
+                            size: formatFileSize(file.size)
+                        };
+                        
+                        uploadedImages.push(imageData);
+                        displayImages();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Please upload only image files');
+                }
+            });
+        }
+
+        function displayImages() {
+            imageGallery.innerHTML = '';
+            
+            uploadedImages.forEach(image => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.innerHTML = `
+                    <img src="${image.src}" alt="${image.name}">
+                    <div class="image-info">
+                        <h3>${image.name}</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">Size: ${image.size}</p>
+                        <button class="btn remove-btn" onclick="removeImage('${image.id}')">
+                            Remove
+                        </button>
+                    </div>
+                `;
+                imageGallery.appendChild(imageItem);
+            });
+            
+            updateUploadArea();
+        }
+
+        function removeImage(id) {
+            uploadedImages = uploadedImages.filter(img => img.id != id);
+            displayImages();
+        }
+
+        function clearImages() {
+            uploadedImages = [];
+            displayImages();
+        }
+
+        function updateUploadArea() {
+            if (uploadedImages.length >= maxImages) {
+                uploadArea.style.display = 'none';
+            } else {
+                uploadArea.style.display = 'block';
+                const remaining = maxImages - uploadedImages.length;
+                uploadArea.querySelector('p').innerHTML = `<strong>Drop images here or click to browse</strong><br>You can upload ${remaining} more image${remaining > 1 ? 's' : ''}`;
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
 </body>
 </html>
