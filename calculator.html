@@ -1,85 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Green Campus - Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO₂ Calculator - Green Campus</title>
     <style>
-        /* Basic styles similar to tips.html */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f9f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            padding: 1rem;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
-        header {
-            background-color: #2f855a;
-            padding: 1rem 2rem;
-            color: white;
-        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-        .logo {
             font-size: 1.5rem;
             font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-        .nav-links li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .nav-links li a[aria-current="page"] {
-            text-decoration: underline;
-        }
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        h1 {
             color: #2f855a;
+        }
+
+        .logo::before {
+            content: "🌱";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #2f855a;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0 4rem;
+        }
+
+        .hero-section {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section h1 {
+            color: #2f855a;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
         }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #ddd;
-            margin-top: 3rem;
-            font-size: 0.9rem;
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        a {
+
+        .calculator-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .question-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: #f7fafc;
+            border-left: 5px solid #2f855a;
+        }
+
+        .question-section.hidden {
+            display: none;
+        }
+
+        .question-title {
             color: #2f855a;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .question-options {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #2f855a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(47, 133, 90, 0.1);
+        }
+
+        .option.selected {
+            border-color: #2f855a;
+            background: #f0fff4;
+        }
+
+        .option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .option-label {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .option-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #2f855a;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #2f855a, #38a169);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-section.hidden {
+            display: none;
+        }
+
+        .co2-result {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2f855a;
+            margin: 1rem 0;
+        }
+
+        .result-category {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tips-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .comparison-chart {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="pageHeader">
         <nav class="container">
             <div class="logo">Green Campus</div>
             <ul class="nav-links">
                 <li><a href="main page.html">Home</a></li>
                 <li><a href="tips.html">Tips</a></li>
                 <li><a href="mobility.html">Mobility</a></li>
-                <li><a href="calculator.html" aria-current="page">Calculator</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
                 <li><a href="map.html">Campus Map</a></li>
                 <li><a href="events.html">Events</a></li>
                 <li><a href="directory.html">Directory</a></li>
@@ -87,12 +329,402 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <h1>Carbon Calculator</h1>
-        <p>Calculate your personal CO₂ footprint and discover personalized ways to reduce your environmental impact.</p>
+
+    <main class="container" style="margin-top: 0;">
+        <div class="hero-section">
+            <h1>📊 CO₂-Fußabdruck Rechner</h1>
+            <p>Entdecke deinen persönlichen CO₂-Fußabdruck und erhalte maßgeschneiderte Tipps für ein nachhaltigeres Leben am Campus und in Aalen.</p>
+        </div>
+
+        <div class="calculator-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+
+            <!-- Question 1: Transportation -->
+            <div class="question-section" data-question="1">
+                <h3 class="question-title">🚌 Wie kommst du normalerweise zur Hochschule?</h3>
+                <div class="question-options">
+                    <label class="option">
+                        <input type="radio" name="transport" value="15">
+                        <div class="option-label">Auto (alleine)</div>
+                        <div class="option-description">Täglich mit dem eigenen PKW</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="transport" value="8">
+                        <div class="option-label">Auto (Fahrgemeinschaft)</div>
+                        <div class="option-description">Regelmäßige Fahrgemeinschaft</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="transport" value="3">
+                        <div class="option-label">Öffentliche Verkehrsmittel</div>
+                        <div class="option-description">Bus, Bahn oder Kombination</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="transport" value="0">
+                        <div class="option-label">Fahrrad oder zu Fuß</div>
+                        <div class="option-description">Aktive Mobilität</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 2: Diet -->
+            <div class="question-section hidden" data-question="2">
+                <h3 class="question-title">🍽️ Wie würdest du deine Ernährung beschreiben?</h3>
+                <div class="question-options">
+                    <label class="option">
+                        <input type="radio" name="diet" value="12">
+                        <div class="option-label">Fleisch mehrmals täglich</div>
+                        <div class="option-description">Fleisch bei fast jeder Mahlzeit</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="diet" value="8">
+                        <div class="option-label">Fleisch einmal täglich</div>
+                        <div class="option-description">Klassische Mischkost</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="diet" value="5">
+                        <div class="option-label">Fleisch 2-3x pro Woche</div>
+                        <div class="option-description">Bewusste Reduzierung</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="diet" value="3">
+                        <div class="option-label">Vegetarisch</div>
+                        <div class="option-description">Kein Fleisch, aber Milchprodukte</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="diet" value="1">
+                        <div class="option-label">Vegan</div>
+                        <div class="option-description">Pflanzliche Ernährung</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 3: Housing -->
+            <div class="question-section hidden" data-question="3">
+                <h3 class="question-title">🏠 Wie wohnst du in Aalen?</h3>
+                <div class="question-options">
+                    <label class="option">
+                        <input type="radio" name="housing" value="10">
+                        <div class="option-label">Eigene Wohnung (>60m²)</div>
+                        <div class="option-description">Große Wohnung alleine</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="housing" value="7">
+                        <div class="option-label">Eigene Wohnung (30-60m²)</div>
+                        <div class="option-description">Kleine Wohnung alleine</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="housing" value="5">
+                        <div class="option-label">WG oder geteilte Wohnung</div>
+                        <div class="option-description">Geteilte Kosten und Energie</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="housing" value="3">
+                        <div class="option-label">Studentenwohnheim</div>
+                        <div class="option-description">Gemeinschaftseinrichtungen</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="housing" value="2">
+                        <div class="option-label">Bei den Eltern</div>
+                        <div class="option-description">Familienhaushalt</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 4: Consumption -->
+            <div class="question-section hidden" data-question="4">
+                <h3 class="question-title">🛍️ Wie oft kaufst du neue Kleidung/Elektronik?</h3>
+                <div class="question-options">
+                    <label class="option">
+                        <input type="radio" name="consumption" value="8">
+                        <div class="option-label">Sehr häufig</div>
+                        <div class="option-description">Mehrmals im Monat neue Sachen</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="consumption" value="5">
+                        <div class="option-label">Regelmäßig</div>
+                        <div class="option-description">Monatlich kleinere Einkäufe</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="consumption" value="3">
+                        <div class="option-label">Gelegentlich</div>
+                        <div class="option-description">Bei Bedarf oder saisonal</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="consumption" value="1">
+                        <div class="option-label">Selten</div>
+                        <div class="option-description">Nur wenn wirklich nötig</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="consumption" value="0">
+                        <div class="option-label">Second-Hand/Tausch</div>
+                        <div class="option-description">Hauptsächlich gebraucht</div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 5: Travel -->
+            <div class="question-section hidden" data-question="5">
+                <h3 class="question-title">✈️ Wie oft reist du pro Jahr?</h3>
+                <div class="question-options">
+                    <label class="option">
+                        <input type="radio" name="travel" value="15">
+                        <div class="option-label">Mehrere Flugreisen</div>
+                        <div class="option-description">3+ Flüge pro Jahr</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="travel" value="8">
+                        <div class="option-label">1-2 Flugreisen</div>
+                        <div class="option-description">Gelegentliche Fernreisen</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="travel" value="3">
+                        <div class="option-label">Hauptsächlich Bahnreisen</div>
+                        <div class="option-description">Urlaub in Europa per Zug</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="travel" value="1">
+                        <div class="option-label">Regionale Reisen</div>
+                        <div class="option-description">Meist in Deutschland unterwegs</div>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="travel" value="0">
+                        <div class="option-label">Lokale Aktivitäten</div>
+                        <div class="option-description">Urlaub in der Region</div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Zurück</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Weiter</button>
+            </div>
+        </div>
+
+        <div class="results-section hidden" id="results">
+            <h2>🌍 Dein CO₂-Fußabdruck</h2>
+            <div class="co2-result">
+                <span id="totalCO2">0</span> kg CO₂/Jahr
+            </div>
+            <p>Das entspricht dem CO₂-Ausstoß von <span id="comparison">0</span> km Autofahrt pro Jahr.</p>
+            
+            <div class="comparison-chart">
+                <h3>Im Vergleich:</h3>
+                <p>🎯 <strong>Durchschnittlicher Student:</strong> 4.2 Tonnen CO₂/Jahr</p>
+                <p>🇩🇪 <strong>Deutscher Durchschnitt:</strong> 11.2 Tonnen CO₂/Jahr</p>
+                <p>🌍 <strong>Klimaziel:</strong> 2.3 Tonnen CO₂/Jahr bis 2030</p>
+            </div>
+
+            <div class="category-breakdown">
+                <div class="result-category">
+                    <h4>🚌 Mobilität</h4>
+                    <div class="co2-result" style="font-size: 1.5rem;" id="transportCO2">0 kg</div>
+                </div>
+                <div class="result-category">
+                    <h4>🍽️ Ernährung</h4>
+                    <div class="co2-result" style="font-size: 1.5rem;" id="dietCO2">0 kg</div>
+                </div>
+                <div class="result-category">
+                    <h4>🏠 Wohnen</h4>
+                    <div class="co2-result" style="font-size: 1.5rem;" id="housingCO2">0 kg</div>
+                </div>
+            </div>
+
+            <div class="tips-section">
+                <h3>💡 Deine personalisierten Spartipps</h3>
+                <div id="personalizedTips"></div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="restartCalculator()">Neu berechnen</button>
+                <button class="btn btn-secondary" onclick="shareFeedback()">Feedback geben</button>
+            </div>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2025 Hochschule Aalen Sustainability Hub | A student project for sustainable campus living</p>
-    </footer>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        let answers = {};
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = ((currentQuestion - 1) / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        // Handle option selection
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const questionSection = this.closest('.question-section');
+                questionSection.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.closest('.option').classList.add('selected');
+                
+                answers[this.name] = parseInt(this.value);
+                document.getElementById('nextBtn').disabled = false;
+            });
+        });
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('hidden');
+                currentQuestion++;
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('hidden');
+                
+                document.getElementById('prevBtn').disabled = false;
+                document.getElementById('nextBtn').disabled = true;
+                
+                // Check if current question already has an answer
+                const currentInput = document.querySelector(`[data-question="${currentQuestion}"] input:checked`);
+                if (currentInput) {
+                    document.getElementById('nextBtn').disabled = false;
+                }
+            } else {
+                showResults();
+            }
+            
+            if (currentQuestion === totalQuestions) {
+                document.getElementById('nextBtn').textContent = 'Ergebnis berechnen';
+            }
+            
+            updateProgress();
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('hidden');
+                currentQuestion--;
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('hidden');
+                
+                document.getElementById('nextBtn').disabled = false;
+                document.getElementById('nextBtn').textContent = currentQuestion === totalQuestions ? 'Ergebnis berechnen' : 'Weiter';
+                
+                if (currentQuestion === 1) {
+                    document.getElementById('prevBtn').disabled = true;
+                }
+            }
+            updateProgress();
+        }
+
+        function showResults() {
+            document.querySelector('.calculator-container').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Calculate total CO2 (multiply by factor for annual estimate)
+            const totalCO2 = (answers.transport + answers.diet + answers.housing + answers.consumption + answers.travel) * 80;
+            
+            document.getElementById('totalCO2').textContent = totalCO2.toLocaleString();
+            document.getElementById('comparison').textContent = (totalCO2 * 4.5).toLocaleString();
+            
+            // Show breakdown
+            document.getElementById('transportCO2').textContent = (answers.transport * 80) + ' kg';
+            document.getElementById('dietCO2').textContent = (answers.diet * 80) + ' kg';
+            document.getElementById('housingCO2').textContent = (answers.housing * 80) + ' kg';
+            
+            // Generate personalized tips
+            generateTips();
+        }
+
+        function generateTips() {
+            const tipsContainer = document.getElementById('personalizedTips');
+            const tips = [];
+            
+            if (answers.transport > 10) {
+                tips.push({
+                    icon: '🚲',
+                    text: 'Probiere das Fahrrad für kurze Strecken zur Hochschule - das spart bis zu 1.200 kg CO₂ pro Jahr!',
+                    action: 'Bike-Sharing in Aalen erkunden'
+                });
+            }
+            
+            if (answers.diet > 6) {
+                tips.push({
+                    icon: '🌱',
+                    text: 'Ein fleischfreier Tag pro Woche kann 300 kg CO₂ pro Jahr sparen.',
+                    action: 'Vegetarische Rezepte ausprobieren'
+                });
+            }
+            
+            if (answers.housing > 6) {
+                tips.push({
+                    icon: '💡',
+                    text: 'LED-Beleuchtung und bewusstes Heizen können 500 kg CO₂ jährlich sparen.',
+                    action: 'Energie-Spartipps für dein Zuhause'
+                });
+            }
+            
+            if (answers.consumption > 4) {
+                tips.push({
+                    icon: '♻️',
+                    text: 'Second-Hand Shopping und bewusster Konsum reduzieren deinen Fußabdruck erheblich.',
+                    action: 'Second-Hand Läden in Aalen finden'
+                });
+            }
+            
+            if (answers.travel > 8) {
+                tips.push({
+                    icon: '🚂',
+                    text: 'Bahnreisen statt Flüge können bis zu 2.000 kg CO₂ pro Jahr sparen.',
+                    action: 'Nachtzugverbindungen entdecken'
+                });
+            }
+            
+            // Add default tips if user is already doing well
+            if (tips.length === 0) {
+                tips.push({
+                    icon: '🌟',
+                    text: 'Super! Du lebst bereits sehr nachhaltig. Teile deine Erfahrungen!',
+                    action: 'Community beitreten'
+                });
+            }
+            
+            tipsContainer.innerHTML = tips.map(tip => `
+                <div class="tip-item">
+                    <span style="font-size: 2rem;">${tip.icon}</span>
+                    <div>
+                        <strong>${tip.text}</strong>
+                        <br><small style="color: #2f855a;">${tip.action}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function restartCalculator() {
+            currentQuestion = 1;
+            answers = {};
+            document.getElementById('results').classList.add('hidden');
+            document.querySelector('.calculator-container').classList.remove('hidden');
+            
+            // Reset all questions
+            document.querySelectorAll('.question-section').forEach((section, index) => {
+                if (index === 0) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+            
+            // Reset form
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Reset buttons
+            document.getElementById('prevBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('nextBtn').textContent = 'Weiter';
+            
+            updateProgress();
+        }
+
+        function shareFeedback() {
+            alert('Vielen Dank für dein Interesse! Feedback-Funktion wird bald verfügbar sein.');
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
 </body>
 </html>
