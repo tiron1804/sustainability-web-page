@@ -624,6 +624,9 @@
             
             // Generate personalized tips
             generateTips();
+
+            // Scroll to results section smoothly
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
 
         function generateTips() {
