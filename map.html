@@ -439,16 +439,16 @@
     <main class="container">
         <div class="hero-section">
             <h1>🗺️ Interactive Campus Map</h1>
-            <p>Entdecke alle nachhaltigen Einrichtungen und Services auf dem Campus der Hochschule Aalen. Finde Fahrradständer, Wasserstationen, Recyclingpunkte und mehr!</p>
+            <p>Discover all sustainable facilities and services on the Aalen University campus. Find bike racks, water stations, recycling points and more!</p>
         </div>
 
         <div class="filter-controls">
             <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Alle anzeigen</button>
-                <button class="filter-btn" data-filter="mobility">🚲 Mobilität</button>
-                <button class="filter-btn" data-filter="water">💧 Wasser</button>
-                <button class="filter-btn" data-filter="energy">⚡ Energie</button>
-                <button class="filter-btn" data-filter="nature">🌱 Natur</button>
+                <button class="filter-btn active" data-filter="all">Show All</button>
+                <button class="filter-btn" data-filter="mobility">🚲 Mobility</button>
+                <button class="filter-btn" data-filter="water">💧 Water</button>
+                <button class="filter-btn" data-filter="energy">⚡ Energy</button>
+                <button class="filter-btn" data-filter="nature">🌱 Nature</button>
             </div>
         </div>
 
@@ -457,10 +457,10 @@
 <div class="campus-map" id="campusMap">
     <img src="campus.jpg" alt="Campus Plan" style="width: 100%; height: 100%; object-fit: contain; border-radius: 15px; border: 2px solid #2f855a;">
     <!-- Buildings -->
-    <div class="building hauptgebäude" data-info="hauptgebäude">Hauptgebäude</div>
-    <div class="building mensa" data-info="mensa">Mensa</div>
-    <div class="building parkhaus" data-info="parkhaus">Parkhaus</div>
-    <div class="building cafeteria" data-info="cafeteria">Cafeteria</div>
+    <div class="building hauptgebäude" data-info="hauptgebäude">Main Building</div>
+    <div class="building mensa" data-info="mensa">Cafeteria</div>
+    <div class="building parkhaus" data-info="parkhaus">Parking Garage</div>
+    <div class="building cafeteria" data-info="cafeteria">Café</div>
 
     <!-- Sustainable Features -->
     <div class="feature-point bike-rack" data-info="bike-rack" data-filter="mobility">🚲</div>
@@ -471,82 +471,82 @@
 
                 <div class="info-panel" id="infoPanel">
                     <button class="info-close" onclick="closeInfo()">×</button>
-                    <h4 id="infoTitle">Standort Info</h4>
-                    <p id="infoDescription">Klicke auf einen Punkt auf der Karte für mehr Informationen.</p>
+                    <h4 id="infoTitle">Location Info</h4>
+                    <p id="infoDescription">Click on a point on the map for more information.</p>
                     <div id="infoDetails"></div>
                 </div>
             </div>
 
             <div class="legend">
-                <h3>🎯 Campus Einrichtungen</h3>
+                <h3>🎯 Campus Facilities</h3>
                 
                 <div class="legend-section">
-                    <h4 style="color: #4a5568; margin-bottom: 1rem;">Gebäude</h4>
+                    <h4 style="color: #4a5568; margin-bottom: 1rem;">Buildings</h4>
                     <div class="legend-item" data-target="hauptgebäude">
                         <div class="legend-icon" style="background: #4a5568;">🏢</div>
                         <div class="legend-text">
-                            <div class="legend-title">Hauptgebäude</div>
-                            <div class="legend-description">Verwaltung & Hörsäle</div>
+                            <div class="legend-title">Main Building</div>
+                            <div class="legend-description">Administration & Lecture Halls</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="mensa">
                         <div class="legend-icon" style="background: #f56565;">🍽️</div>
                         <div class="legend-text">
-                            <div class="legend-title">Mensa</div>
-                            <div class="legend-description">Nachhaltige Verpflegung</div>
+                            <div class="legend-title">Cafeteria</div>
+                            <div class="legend-description">Sustainable Dining</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="bibliothek">
                         <div class="legend-icon" style="background: #3182ce;">📚</div>
                         <div class="legend-text">
-                            <div class="legend-title">Bibliothek</div>
-                            <div class="legend-description">Lern- & Arbeitsplätze</div>
+                            <div class="legend-title">Library</div>
+                            <div class="legend-description">Study & Work Spaces</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="legend-section">
-                    <h4 style="color: #4a5568; margin-bottom: 1rem;">Nachhaltige Services</h4>
+                    <h4 style="color: #4a5568; margin-bottom: 1rem;">Sustainable Services</h4>
                     <div class="legend-item" data-target="bike-rack">
                         <div class="legend-icon" style="background: #3182ce;">🚲</div>
                         <div class="legend-text">
-                            <div class="legend-title">Fahrradständer</div>
-                            <div class="legend-description">Sichere Abstellplätze</div>
+                            <div class="legend-title">Bike Racks</div>
+                            <div class="legend-description">Secure Parking Spaces</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="water-station">
                         <div class="legend-icon" style="background: #38a169;">💧</div>
                         <div class="legend-text">
-                            <div class="legend-title">Wasserstationen</div>
-                            <div class="legend-description">Kostenlose Trinkwasser-Refill</div>
+                            <div class="legend-title">Water Stations</div>
+                            <div class="legend-description">Free Drinking Water Refill</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="recycling">
                         <div class="legend-icon" style="background: #f56565;">♻️</div>
                         <div class="legend-text">
                             <div class="legend-title">Recycling</div>
-                            <div class="legend-description">Mülltrennung & Wertstoffsammlung</div>
+                            <div class="legend-description">Waste Separation & Collection</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="solar-panel">
                         <div class="legend-icon" style="background: #f6ad55;">☀️</div>
                         <div class="legend-text">
-                            <div class="legend-title">Solaranlage</div>
-                            <div class="legend-description">Erneuerbare Energie</div>
+                            <div class="legend-title">Solar System</div>
+                            <div class="legend-description">Renewable Energy</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="garden">
                         <div class="legend-icon" style="background: #68d391;">🌱</div>
                         <div class="legend-text">
-                            <div class="legend-title">Campus-Garten</div>
-                            <div class="legend-description">Biodiversität & Erholung</div>
+                            <div class="legend-title">Campus Garden</div>
+                            <div class="legend-description">Biodiversity & Recreation</div>
                         </div>
                     </div>
                     <div class="legend-item" data-target="ev-charging">
                         <div class="legend-icon" style="background: #805ad5;">🔌</div>
                         <div class="legend-text">
-                            <div class="legend-title">E-Ladestation</div>
-                            <div class="legend-description">Elektromobilität</div>
+                            <div class="legend-title">EV Charging Station</div>
+                            <div class="legend-description">Electric Mobility</div>
                         </div>
                     </div>
                 </div>
@@ -557,22 +557,22 @@
             <div class="stat-card">
                 <div class="stat-icon">🚲</div>
                 <div class="stat-number">156</div>
-                <div class="stat-label">Fahrradparkplätze</div>
+                <div class="stat-label">Bike Parking Spaces</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">💧</div>
                 <div class="stat-number">12</div>
-                <div class="stat-label">Wasserstationen</div>
+                <div class="stat-label">Water Stations</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">♻️</div>
                 <div class="stat-number">24</div>
-                <div class="stat-label">Recyclingpunkte</div>
+                <div class="stat-label">Recycling Points</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🌱</div>
                 <div class="stat-number">8</div>
-                <div class="stat-label">Grünflächen</div>
+                <div class="stat-label">Green Spaces</div>
             </div>
         </div>
     </main>
@@ -580,49 +580,49 @@
     <script>
         const infoData = {
             'hauptgebäude': {
-                title: '🏢 Hauptgebäude',
-                description: 'Das Herzstück des Campus mit modernen Hörsälen und nachhaltiger Gebäudetechnik.',
-                details: ['LED-Beleuchtung in allen Räumen', 'Intelligente Heizungssteuerung', 'Papierloses Büro-System', 'Energieeffiziente Fenster']
+                title: '🏢 Main Building',
+                description: 'The heart of the campus with modern lecture halls and sustainable building technology.',
+                details: ['LED lighting in all rooms', 'Smart heating control', 'Paperless office system', 'Energy-efficient windows']
             },
             'mensa': {
-                title: '🍽️ Mensa',
-                description: 'Nachhaltige Verpflegung mit regionalen und Bio-Produkten.',
-                details: ['50% vegetarische/vegane Gerichte', 'Regionale Lieferanten bevorzugt', 'Kompostierung von Bioabfall', 'Mehrwegsystem für Getränke']
+                title: '🍽️ Cafeteria',
+                description: 'Sustainable dining with regional and organic products.',
+                details: ['50% vegetarian/vegan dishes', 'Regional suppliers preferred', 'Composting of organic waste', 'Reusable system for beverages']
             },
             'parkhaus': {
-                title: '🚗 Parkhaus',
-                description: 'Parkhaus mit vielen Parkplätzen.',
-                details: ['Kostenpflichtig', 'Viele Parkplätze', 'Kurze Wege zu den Gebäuden']
+                title: '🚗 Parking Garage',
+                description: 'Parking garage with many parking spaces.',
+                details: ['Fee-based', 'Many parking spaces', 'Short distances to buildings']
             },
             'bike-rack': {
-                title: '🚲 Fahrradständer',
-                description: 'Sichere und überdachte Abstellplätze für Fahrräder.',
-                details: ['156 Stellplätze verfügbar', 'Diebstahlschutz', 'E-Bike Lademöglichkeit', 'Werkzeugstation vorhanden']
+                title: '🚲 Bike Racks',
+                description: 'Secure and covered parking spaces for bicycles.',
+                details: ['156 spaces available', 'Theft protection', 'E-bike charging option', 'Tool station available']
             },
             'water-station': {
-                title: '💧 Wasserstation',
-                description: 'Kostenlose Trinkwasser-Auffüllstation für alle Studierenden.',
-                details: ['Gefiltertes Leitungswasser', '24/7 verfügbar', 'Kalt- und Raumtemperatur', 'Spart 5000+ Plastikflaschen/Jahr']
+                title: '💧 Water Station',
+                description: 'Free drinking water refill station for all students.',
+                details: ['Filtered tap water', 'Available 24/7', 'Cold and room temperature', 'Saves 5000+ plastic bottles/year']
             },
             'recycling': {
-                title: '♻️ Recycling-Station',
-                description: 'Umfassende Mülltrennung und Wertstoffsammlung.',
-                details: ['Papier, Plastik, Glas, Bio', 'Batteriesammlung', 'Elektronikschrott-Abgabe', 'Kork- und Kronkorken-Sammlung']
+                title: '♻️ Recycling Station',
+                description: 'Comprehensive waste separation and recyclable collection.',
+                details: ['Paper, plastic, glass, organic', 'Battery collection', 'Electronic waste disposal', 'Cork and bottle cap collection']
             },
             'cafeteria': {
-                title: '🍽️ Cafeteria',
-                description: 'Moderne Cafeteria für nachhaltige und gesunde Verpflegung.',
-                details: ['Platz für viele Personen', 'Täglich neue Angebote']
+                title: '🍽️ Café',
+                description: 'Modern café for sustainable and healthy catering.',
+                details: ['Space for many people', 'Daily new offers']
             },
             'garden': {
-                title: '🌱 Campus-Garten',
-                description: 'Gemeinschaftsgarten für Studierende und Mitarbeiter.',
-                details: ['Biologischer Anbau', 'Lehrprojekte Integration', 'Bienenfreundliche Pflanzen', 'Kompostieranlage']
+                title: '🌱 Campus Garden',
+                description: 'Community garden for students and staff.',
+                details: ['Organic cultivation', 'Educational project integration', 'Bee-friendly plants', 'Composting facility']
             },
             'ev-charging': {
-                title: '🔌 E-Ladestation',
-                description: 'Ladestation für Elektrofahrzeuge mit Ökostrom.',
-                details: ['2 Ladepunkte verfügbar', '100% Ökostrom', 'Typ 2 Stecker', 'App-basierte Bezahlung']
+                title: '🔌 EV Charging Station',
+                description: 'Charging station for electric vehicles with green electricity.',
+                details: ['2 charging points available', '100% green electricity', 'Type 2 connector', 'App-based payment']
             }
         };
 
